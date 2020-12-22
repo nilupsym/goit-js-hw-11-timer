@@ -1,4 +1,3 @@
-
 const refs = {
   days: document.querySelector('[data-value="days"]'),
   hours: document.querySelector('[data-value="hours"]'),
@@ -7,12 +6,18 @@ const refs = {
   targetDate: new Date ('Dec 31, 2020'),
 }
 
+let intervalID = null;
+
 const timer = {
   start() {
     const targetDate = refs.targetDate;
-    setInterval(() => {
+    intervalID = setInterval(() => {
       const currentDate = Date.now();
-      const time = targetDate - currentDate;
+      let time = targetDate - currentDate;
+      if (time <= 0) {
+        time = 0;
+        clearInterval(intervalID);        
+      }
       updateClockFace(time);
     }, 1000)
   }
